@@ -15,6 +15,8 @@ import java.net.Socket;
 import java.net.URL;
 import java.util.Date;
 import java.util.StringTokenizer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 // The tutorial can be found just here on the SSaurel's Blog : 
 // https://www.ssaurel.com/blog/create-a-simple-http-web-server-in-java
@@ -121,6 +123,7 @@ public class JavaHTTPServer implements Runnable
                                 // GET method so we return content
 				if (method.equals("GET"))
                                 {
+                                    
 					byte[] fileData = readFileData(file, fileLength);					
 					// send HTTP Headers
 					out.println("HTTP/1.1 200 OK");
@@ -139,29 +142,17 @@ public class JavaHTTPServer implements Runnable
 				}		
 			}	
 		} 
-                catch (FileNotFoundException fnfe)
-                {
+                catch (FileNotFoundException fnfe) 
+                {                  
 			try 
                         {
-                                String url = null;
-                                HttpURLConnection con = (HttpURLConnection)(new URL( url ).openConnection());
-                                con.setInstanceFollowRedirects( false );
-                                con.connect();
-                                int responseCode = con.getResponseCode();
-                                System.out.println( responseCode );
-                                String location = con.getHeaderField( "Location" );
-                                System.out.println( location );
-				fileNotFound(out, dataOut, fileRequested);
+                            redirect(out, dataOut, fileRequested);
+                            fileNotFound(out, dataOut, fileRequested);
 			} 
-                        catch (IOException ioe) 
+                        catch (IOException ioe)
                         {
 				System.err.println("Error with file not found exception : " + ioe.getMessage());
-			}		
-		} 
-                catch (IOException ioe) 
-                {
-			System.err.println("Server error : " + ioe);
-		} 
+			}
                 finally 
                 {
 			try 
@@ -180,9 +171,12 @@ public class JavaHTTPServer implements Runnable
 				System.out.println("Connection closed.\n");
 			}
 		}		
-	}
+	}   catch (IOException ex) {
+                Logger.getLogger(JavaHTTPServer.class.getName()).log(Level.SEVERE, null, ex);
+            }
 	
-	private byte[] readFileData(File file, int fileLength) throws IOException 
+        }
+        private byte[] readFileData(File file, int fileLength) throws IOException 
         {
 		FileInputStream fileIn = null;
 		byte[] fileData = new byte[fileLength];		
@@ -225,5 +219,33 @@ public class JavaHTTPServer implements Runnable
                 {
 			System.out.println("File " + fileRequested + " not found");
 		}
-	}	
+	}
+        private void redirect(PrintWriter out, OutputStream dataOut, String fileRequested) throws IOException
+        {
+            
+            String fileRedirected = fileRequested + "/" + DEFAULT_FILE;
+            System.out.println("RED :" + fileRedirected);
+            
+            File fileRed = new File(WEB_ROOT, fileRedirected);
+            
+            if(fileRed.exists())
+            {
+                
+                File file = new File(WEB_ROOT, fileRequested);
+		int fileLength = (int) file.length();
+		String content = "text/html";
+		byte[] fileData = readFileData(fileRed, fileLength);
+		
+		out.println("HTTP/1.1 301 Moved Permanently");
+		out.println("Server: Java HTTP Server from SSaurel : 1.0");
+		out.println("Date: " + new Date());
+                out.println("Location: " + fileRedirected);
+		out.println(); // blank line between headers and content, very important !
+		out.flush(); // flush character output stream buffer
+		if (verbose) 
+                {
+			System.out.println("File " + fileRequested + " not found, redirected to " + fileRedirected);
+		}
+            }
+        }
 }
