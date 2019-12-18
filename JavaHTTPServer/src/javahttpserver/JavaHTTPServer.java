@@ -239,6 +239,10 @@ public class JavaHTTPServer implements Runnable
         {
             return "text/html";
         } 
+        else if(fileRequested.endsWith(".css"))
+        {
+            return "text/css";
+        }
         else
         {
             return "text/plain";
