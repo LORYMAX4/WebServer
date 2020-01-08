@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <conf>
     <port>8080</port>
+    <index>index.html</index>
+    <notfound>404.html</notfound>
+    <notsupported>not_supported.html</notsupported>
 </conf>

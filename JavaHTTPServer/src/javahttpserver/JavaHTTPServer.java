@@ -22,9 +22,9 @@ public class JavaHTTPServer implements Runnable
 { 
 	
 	static final File WEB_ROOT = new File(".");
-	static final String DEFAULT_FILE = "index.html";
-	static final String FILE_NOT_FOUND = "404.html";
-	static final String METHOD_NOT_SUPPORTED = "not_supported.html";
+	static String DEFAULT_FILE;
+	static String FILE_NOT_FOUND;
+	static String METHOD_NOT_SUPPORTED;
 	// port to listen connection
 	static int PORT=0;
 	// verbose mode
@@ -47,6 +47,9 @@ public class JavaHTTPServer implements Runnable
                         AppConfigParser configParser = new AppConfigParser();
                         conf = configParser.parse("javahttpserver/conf.xml");
                         System.out.println(conf);
+                        DEFAULT_FILE = conf.getIndex(); 
+                        FILE_NOT_FOUND = conf.getNotfound(); 
+                        METHOD_NOT_SUPPORTED = conf.getNotsupported();
                     }
                     catch (JAXBException ex)
                     {
