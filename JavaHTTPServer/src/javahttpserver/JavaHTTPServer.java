@@ -11,8 +11,10 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.URISyntaxException;
 import java.util.Date;
 import java.util.StringTokenizer;
+import javax.xml.bind.JAXBException;
 
 public class JavaHTTPServer implements Runnable 
 {
@@ -24,7 +26,7 @@ public class JavaHTTPServer implements Runnable
     static final String METHOD_NOT_SUPPORTED = "not-supported.html";
     static final String Redirect = "301.html";
     // port to listen connection
-    static final int PORT = 8080;
+    static int PORT = 0;
     // verbose mode
     static final boolean verbose = true;
     // Client Connection via Socket Class
@@ -35,10 +37,19 @@ public class JavaHTTPServer implements Runnable
         connect = c;
     }
 
-    public static void main(String[] args)
+    public static void main(String[] args) throws URISyntaxException
     {
         try
         {
+            try
+            {
+            AppConfigParser configParser = new AppConfigParser();
+            Conf config = configParser.parse("javahttpserver/conf.xml");
+            }
+            catch(JAXBException ex)
+            {
+                ex.printStackTrace();
+            }
             ServerSocket serverConnect = new ServerSocket(PORT);
             System.out.println("Server started.\nListening for connections on port : " + PORT + " ...\n");
 
