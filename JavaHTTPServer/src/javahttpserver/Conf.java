@@ -1,24 +1,25 @@
 package javahttpserver;
+
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
-public class Conf 
+public class Conf
 {
-    private String config;
+    private String port;
 
-    public String getConfig() 
+    public String getPort()
     {
-        return config;
+        return port;
     }
 
-    public void setConfig(String config) 
+    public void setPort(String port)
     {
-        this.config = config;
+        this.port = port;
     }
 
     @Override
     public String toString() 
     {
-        return "Conf{" + "config=" + config + '}';
+        return "Conf{" + "port=" + port + '}';
     }
 }

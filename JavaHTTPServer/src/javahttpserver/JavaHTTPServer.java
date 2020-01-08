@@ -26,7 +26,7 @@ public class JavaHTTPServer implements Runnable
     static final String METHOD_NOT_SUPPORTED = "not-supported.html";
     static final String Redirect = "301.html";
     // port to listen connection
-    static int PORT = 0;
+    static int PORT=0;
     // verbose mode
     static final boolean verbose = true;
     // Client Connection via Socket Class
@@ -39,19 +39,26 @@ public class JavaHTTPServer implements Runnable
 
     public static void main(String[] args) throws URISyntaxException
     {
+    try
+       {
+        Conf conf=null;
         try
-        {
-            try
             {
             AppConfigParser configParser = new AppConfigParser();
-            Conf config = configParser.parse("javahttpserver/conf.xml");
+            conf = configParser.parse("javahttpserver/conf.xml");
+            System.out.println(conf);
             }
-            catch(JAXBException ex)
-            {
-                ex.printStackTrace();
-            }
-            ServerSocket serverConnect = new ServerSocket(PORT);
-            System.out.println("Server started.\nListening for connections on port : " + PORT + " ...\n");
+        catch (JAXBException ex)
+        {
+            ex.printStackTrace();
+        }
+        catch (URISyntaxException ex)
+        {
+            ex.printStackTrace();
+        }
+        PORT = Integer.valueOf(conf.getPort());
+        ServerSocket serverConnect = new ServerSocket(PORT);
+        System.out.println("Server started.\nListening for connections on port : " + PORT + " ...\n");
 
             // we listen until user halts server execution
             while (true) 
