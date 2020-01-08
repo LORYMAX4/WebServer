@@ -5,14 +5,14 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class Conf
 {
-    private String port;
+    private int port;
 
-    public String getPort()
+    public int getPort()
     {
         return port;
     }
 
-    public void setPort(String port)
+    public void setPort(int port)
     {
         this.port = port;
     }
