@@ -26,7 +26,7 @@ public class JavaHTTPServer implements Runnable
 	static String FILE_NOT_FOUND;
 	static String METHOD_NOT_SUPPORTED;
 	// port to listen connection
-	static int PORT=0;
+	static int PORT;
 	// verbose mode
 	static final boolean verbose = true;
 	// Client Connection via Socket Class

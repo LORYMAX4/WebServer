@@ -53,6 +53,6 @@ public class Conf
     @Override
     public String toString()
     {
-        return "Conf{" + "port=" + port + ", index=" + index + ", notfound=" + notfound + ", notsupported=" + notsupported + '}';
+        return "Conf { " + "port=" + port + ", index=" + index + ", notfound=" + notfound + ", notsupported=" + notsupported + '}';
     }
 }
