@@ -42,11 +42,15 @@ public class JavaHTTPServer implements Runnable
 		try
                 {
                     Conf conf=null;
+                    Cliente cliente=null;
                     try
                     {
                         AppConfigParser configParser = new AppConfigParser();
                         conf = configParser.parse("javahttpserver/conf.xml");
                         System.out.println(conf);
+                        ClienteParser clientParser = new ClienteParser();
+                        cliente = clientParser.parse("javahttpserver/dati.xml");
+                        System.out.println(cliente);
                         DEFAULT_FILE = conf.getIndex(); 
                         FILE_NOT_FOUND = conf.getNotfound(); 
                         METHOD_NOT_SUPPORTED = conf.getNotsupported();

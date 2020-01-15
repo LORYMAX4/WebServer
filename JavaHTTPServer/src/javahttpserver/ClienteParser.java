@@ -9,18 +9,18 @@ import javax.xml.bind.Marshaller;
 import javax.xml.bind.PropertyException;
 import javax.xml.bind.Unmarshaller;
 
-public class AppConfigParser 
+public class ClienteParser 
 {
-    public Conf parse(String filename) throws URISyntaxException, JAXBException 
+    public Cliente parse(String filename) throws URISyntaxException, JAXBException 
     {
         //cerca il file nel classpath
         URL resource = getClass().getClassLoader().getResource(filename);
         File file = new File(resource.toURI());
         //istanzia il parser
-        JAXBContext jaxbContext = JAXBContext.newInstance(Conf.class);
+        JAXBContext jaxbContext = JAXBContext.newInstance(Cliente.class);
         Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
         //effettua il parse del contenuto del file all'interno di una istanza della classe
-        Conf conf = (Conf) jaxbUnmarshaller.unmarshal(file);
-        return conf;
+        Cliente cliente = (Cliente) jaxbUnmarshaller.unmarshal(file);
+        return cliente;
     }
 }
