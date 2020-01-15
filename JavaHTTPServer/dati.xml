@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+    <cliente>
+        <cognome>Merlini</cognome>
+        <citta>Firenze</citta>
+        <id>1</id>
+    </cliente>
+    <cliente>
+        <cognome>Rossi</cognome>
+        <citta>Milano</citta>
+        <id>2</id>
+    </cliente>
+    <cliente>
+        <cognome>Verdi</cognome>
+        <citta>Torino</citta>
+        <id>3</id>
+    </cliente>
+</root>
